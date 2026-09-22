@@ -1,32 +1,66 @@
-enum MeasurementSystem { mm, cm, dm, m, inch, feet }
+enum MeasurementSystem {
+  mm(1), 
+  cm(10), 
+  dm(100), 
+  m(1000), 
+  inch(25.4), 
+  feet(304.8);
+  
+  final num factor;
+  const MeasurementSystem(this.factor);
+  }
 
 class Triangle {
-  double heightInMm;
-  double widthInMm;
+  double _heightInMm;
+  double _widthInMm;
   MeasurementSystem measurementSystem;
 
-  Triangle._(this.heightInMm, this.widthInMm, this.measurementSystem);
+  Triangle._internal(this._heightInMm, this._widthInMm, this.measurementSystem);
 
-  Triangle.mm(double height, double width)
-    : this._(height, width, MeasurementSystem.mm);
+  factory Triangle.mm(double height, double width) =>
+    Triangle._internal(
+      height * MeasurementSystem.mm.factor, 
+      width * MeasurementSystem.mm.factor, 
+      MeasurementSystem.mm,
+    );
 
-  Triangle.cm(double height, double width)
-    : this._(height * 10, width * 10, MeasurementSystem.cm);
+  factory Triangle.cm(double height, double width) =>
+    Triangle._internal(
+      height * MeasurementSystem.cm.factor, 
+      width * MeasurementSystem.cm.factor, 
+      MeasurementSystem.cm,
+    );
 
-  Triangle.dm(double height, double width)
-    : this._(height * 100, width * 100, MeasurementSystem.dm);
+  factory Triangle.dm(double height, double width) =>
+    Triangle._internal(
+      height * MeasurementSystem.dm.factor, 
+      width * MeasurementSystem.dm.factor, 
+      MeasurementSystem.dm,
+    );
 
-  Triangle.m(double height, double width)
-    : this._(height * 1000, width * 1000, MeasurementSystem.m);
+  factory Triangle.m(double height, double width) =>
+    Triangle._internal(
+      height * MeasurementSystem.m.factor, 
+      width * MeasurementSystem.m.factor, 
+      MeasurementSystem.m,
+    );
 
-  Triangle.inch(double height, double width)
-    : this._(height * 25.4, width * 25.4, MeasurementSystem.inch);
+  factory Triangle.inch(double height, double width) =>
+    Triangle._internal(
+      height * MeasurementSystem.inch.factor, 
+      width* MeasurementSystem.inch.factor, 
+      MeasurementSystem.inch,
+    );
 
-  Triangle.feet(double height, double width)
-    : this._(height * 304.8, width * 304.8, MeasurementSystem.feet);
+  factory Triangle.feet(double height, double width) =>
+    Triangle._internal(
+      height * MeasurementSystem.feet.factor, 
+      width * MeasurementSystem.feet.factor, 
+      MeasurementSystem.feet,
+    );
 
-  Triangle(double height, double width, MeasurementSystem measurementSystem)
-      : this._(
+  factory Triangle(double height, double width, MeasurementSystem measurementSystem) =>
+      Triangle._internal(
           _convertToMm(height, measurementSystem),
           _convertToMm(width, measurementSystem),
           measurementSystem,
@@ -35,17 +69,133 @@ class Triangle {
   static double _convertToMm(double value, MeasurementSystem measurementSystem) {
     switch (measurementSystem) {
       case MeasurementSystem.mm:
-        return value;
+        return value * MeasurementSystem.mm.factor;
       case MeasurementSystem.cm:
-        return value * 10;
+        return value * MeasurementSystem.cm.factor;
       case MeasurementSystem.dm:
-        return value * 100;
+        return value * MeasurementSystem.dm.factor;
       case MeasurementSystem.m:
-        return value * 1000;
+        return value * MeasurementSystem.m.factor;
       case MeasurementSystem.inch:
-        return value * 25.4;
+        return value * MeasurementSystem.inch.factor;
       case MeasurementSystem.feet:
-        return value * 304.8;
+        return value * MeasurementSystem.feet.factor;
+    }
+  }
+
+  ////////////
+  ///Getter///
+  ////////////
+
+  double get heightInMm {
+    return _heightInMm / MeasurementSystem.mm.factor;
+  }
+  double get widthInMm {
+    return _widthInMm / MeasurementSystem.mm.factor;
+  }
+
+  double get heightInCm {
+    return _heightInMm / MeasurementSystem.cm.factor;
+  }
+  double get widthInCm {
+    return _widthInMm / MeasurementSystem.cm.factor;
+  }
+
+  double get heightInDm {
+    return _heightInMm / MeasurementSystem.dm.factor; 
+  }
+  double get widthInDm {
+    return _widthInMm / MeasurementSystem.dm.factor;
+  }
+
+  double get heightInMeters {
+    return _heightInMm / MeasurementSystem.m.factor;
+  }
+  double get widthInMeters {
+    return _widthInMm / MeasurementSystem.m.factor;
+  }
+
+  double get heightInInch {
+    return _heightInMm / MeasurementSystem.inch.factor;
+  }
+  double get widthInInch {
+    return _widthInMm / MeasurementSystem.inch.factor;
+  }
+
+  double get heightInFeet {
+    return _heightInMm / MeasurementSystem.feet.factor;
+  }
+  double get widthInFeet {
+    return _widthInMm / MeasurementSystem.feet.factor;
+  }
+
+  ////////////
+  ///Setter///
+  ////////////
+  
+  set heightInMm(double height) {
+    if (height > 0) {
+      _heightInMm = height * MeasurementSystem.mm.factor;
+    }
+  }
+  set widthInMm(double width) {
+    if (width > 0) {
+      _widthInMm = width * MeasurementSystem.mm.factor;
+    }
+  }
+
+  set heightInCm(double height) {
+    if (height > 0) {
+      _heightInMm = height * MeasurementSystem.cm.factor;
+    }
+  }
+  set widthInCm(double width) {
+    if (width > 0) {
+      _widthInMm = width * MeasurementSystem.cm.factor;
+    }
+  }
+  
+  set heightInDm(double height) {
+    if (height > 0) {
+      _heightInMm = height * MeasurementSystem.dm.factor;
+    }
+  }
+  set widthInDm(double width) {
+    if (width > 0) {
+      _widthInMm = width * MeasurementSystem.dm.factor;
+    }
+  }
+
+  set heightInMeters(double height) {
+    if (height > 0) {
+      _heightInMm = height * MeasurementSystem.m.factor;
+    }
+  }
+  set widthInMeters(double width) {
+    if (width > 0) {
+      _widthInMm = width * MeasurementSystem.m.factor;
+    }
+  }
+
+  set heightInInch(double height) {
+    if (height > 0) {
+      _heightInMm = height * MeasurementSystem.inch.factor;
+    }
+  }
+  set widthInInch(double width) {
+    if (width > 0) {
+      _widthInMm = width * MeasurementSystem.inch.factor;
+    }
+  }
+
+  set heightInFeet(double height) {
+    if (height > 0) {
+      _heightInMm = height * MeasurementSystem.feet.factor;
+    }
+  }
+  set widthInFeet(double width) {
+    if (width > 0) {
+      _widthInMm = width * MeasurementSystem.feet.factor;
     }
   }
 }
